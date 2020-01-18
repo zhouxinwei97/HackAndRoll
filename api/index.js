@@ -5,12 +5,17 @@ const path = require('path');
 const sql = require("mssql");
 const bodyParser = require('body-parser');
 const app = express();
-
+var router = express.Router();
 
 app.get("/", function (req, res) {
     console.log(__dirname + "/../client/Homepage.html");
     // res.sendFile(path.resolve(__dirname  + "/../client/override.css"))
     res.sendFile(path.resolve(__dirname  + "/../client/Homepage.html"));
+});
+
+app.get("/about", function(req,res) {
+    console.log(path.resolve(__dirname  + "/../client/about.html"));
+    res.sendFile(path.resolve(__dirname  + "/../client/about.html"));
 });
 
 app.get("/api/user", function (req, res) {
@@ -102,9 +107,11 @@ app.delete("/api/user /:id", function (req, res) {
 
 // let val = telebot.message('www.google.com', 'Job', 'Pay', 'Desc');
 
-app.use(express.static(__dirname + '../client'));
+app.use(express.static(__dirname + '/../client/'));
+module.exports = router;
 const port = process.env.PORT || 5000;
 app.listen(port);
+
 
 console.log('App is listening on port ' + port);
 
