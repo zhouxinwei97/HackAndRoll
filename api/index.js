@@ -7,16 +7,37 @@ const bodyParser = require('body-parser');
 const app = express();
 var router = express.Router();
 
+app.use(bodyParser());
+
+// index page
 app.get("/", function (req, res) {
-    console.log(__dirname + "/../client/Homepage.html");
-    // res.sendFile(path.resolve(__dirname  + "/../client/override.css"))
     res.sendFile(path.resolve(__dirname  + "/../client/Homepage.html"));
 });
 
+// About page
 app.get("/about", function(req,res) {
-    console.log(path.resolve(__dirname  + "/../client/about.html"));
     res.sendFile(path.resolve(__dirname  + "/../client/about.html"));
 });
+
+app.get("/postjob", function(req,res) {
+    res.sendFile(path.resolve(__dirname  + "/../client/postjob.html"));
+
+}); 
+
+app.post("/postjob", function(req,res){ 
+    // console.log(req);
+    var name = req.body.name;
+    var hp = req.body.phonenum;
+    var price = req.body.price;
+    var username = req.body.username;
+    console.log(name, price,hp);
+
+    var descr = req.body.desc; 
+    var values = "'" + name + "', '" + price + "', '" + username + "', '" + hp + "', '" + descr + "'"; 
+    console.log(values);
+
+});
+
 
 app.get("/api/user", function (req, res) {
     var query = "Select * from users";
