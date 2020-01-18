@@ -1,17 +1,16 @@
 {
-  "name": "api",
+  "name": "telebot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
     "mssql": "^6.0.1",
-    "request": "^2.88.0"
+    "node-telegram-bot-api": "^0.40.0"
   }
 }
