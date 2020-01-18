@@ -1,93 +1,108 @@
+
+const telebot = require('../telebot/TeleBot.js')
 const express = require('express');
 const path = require('path');
 const sql = require("mssql");
+const bodyParser = require('body-parser');
 const app = express();
 
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-app.get('/', (req,res) => {
-
-    res.send("Hello");
-
-})
-
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req, res) => {
-    var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/index.html");
 });
 
-// Handles any requests that don't match the ones above
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+app.get("/api/user", function (req, res) {
+    var query = "Select * from users";
+    executeQuery(res, query);
 });
 
+function executeQuery(res, sqlquery) {
 
-// database server set-up with azure 
-const dbConfig = {
-    user: 'bossman69',
-    password: 'MLislife123!',
-    server: 'freelancehub.database.windows.net',
-    database: 'freelancehub',
-    port: 1433, 
-    options: {
-        encrypt: true,
-        rowCollectionOnRequestCompletion: true
-    }
-};
 
-sql.connect(dbConfig, function (err, query) {
+    // database server set-up with azure 
+    var code = '';
+    const dbConfig = {
+        user: 'bossman69',
+        password: 'MLislife123!',
+        server: 'freelancehub.database.windows.net',
+        database: 'freelancehub',
+        port: 1433,
+        options: {
+            encrypt: true,
+            rowCollectionOnRequestCompletion: true
+        }
+    };
 
-    console.log("connected");
-    if (err) console.log(err);
+    sql.connect(dbConfig, function (err) {
 
-    // create Request object
-    let request = new sql.Request();
-    let sqlQuery = 'select * from users';
-    // query to the database
-    request.query(sqlQuery, function (err, res) {
+        console.log("connected");
         if (err) console.log(err);
+        // create Request object
+        let request = new sql.Request();
+        // query to the database
+        request.query(sqlquery, function (err, res) {
+            if (err) {
+                console.log(err);
+                code = '404 not found';
 
-        // console.log(res);
-        console.table(res.recordset);
-        // // res.send(res);
-        sql.close();
+            } else {
+                // console.table(res.recordset);
+                code = "200 ok";
 
+                console.log(res);
+
+                sql.close();
+            }
+            // console.log(code);
+        });
 
     });
+    return code;
 
+}
+
+
+
+//GET API
+app.get("/api/users", function (req, res) {
+    var query = "select * from [users]";
+    console.log(query);
+    executeQuery(res, query);
 });
 
+//POST API
+app.post("/", function (req, res) {
+    // INSERT into users (username, password) VALUES ('ABC', 'efg');
+    var name = req.body.name;
+    var password = req.body.password;
+    var query = "INSERT INTO users (username,password) VALUES ('" + name + "', '" + password + "');";
+    console.log(executeQuery(res, query));
+    res.sendFile(__dirname + "/success.html");
+});
 
-// //GET API
-// app.get("/api/user", function(req , res){
-//     var query = "select * from [users]";
-//     console.log(query);
-//     executeQuery (res, query);
-// });
+//PUT API
+app.put("/api/user/:id", function (req, res) {
+    var query = "UPDATE [user] SET Name= " + req.body.Name + " , Email=  " + req.body.Email + "  WHERE Id= " + req.params.id;
+    executeQuery(res, query);
+});
 
-// //POST API
-// app.post("/api/user", function(req , res){
-//     var query = "INSERT INTO [user] (Name,Email,Password) VALUES (req.body.Name,req.body.Email,req.body.Password)";
-//     executeQuery (res, query);
-// });
+// DELETE API
+app.delete("/api/user /:id", function (req, res) {
+    var query = "DELETE FROM [user] WHERE Id=" + req.params.id;
+    executeQuery(res, query);
+});
 
-// //PUT API
-// app.put("/api/user/:id", function(req , res){
-//     var query = "UPDATE [user] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id= " + req.params.id;
-//     executeQuery (res, query);
-// });
+// Telebot
 
-// // DELETE API
-// app.delete("/api/user /:id", function(req , res){
-//     var query = "DELETE FROM [user] WHERE Id=" + req.params.id;
-//     executeQuery (res, query);
-// });
+let val = telebot.message('www.google.com', 'Job', 'Pay', 'Desc');
 
 
 const port = process.env.PORT || 5000;
 app.listen(port);
 
 console.log('App is listening on port ' + port);
+
+
