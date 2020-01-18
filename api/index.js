@@ -76,9 +76,13 @@ app.get("/api/users", function (req, res) {
 //POST API
 app.post("/", function (req, res) {
     // INSERT into users (username, password) VALUES ('ABC', 'efg');
-    var name = req.body.name;
-    var password = req.body.password;
-    var query = "INSERT INTO users (username,password) VALUES ('" + name + "', '" + password + "');";
+    var title = req.body.title;
+    var price = req.body.price;
+    var username = req.body.username; 
+    var hp = req.body.HP;
+    var descr = req.body.desc; 
+    var values = "'" + title + "', '" + price + "', '" + username + "', '" + hp + "', '" + descr + "'"
+    var query = "INSERT INTO posts (title, price, username, hp, descr) VALUES ('" + name + "', '" + password + "');";
     console.log(executeQuery(res, query));
     res.sendFile(__dirname + "/success.html");
 });
