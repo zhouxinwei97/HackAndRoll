@@ -6,12 +6,11 @@ const sql = require("mssql");
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
 
 app.get("/", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
+    console.log(__dirname + "/../client/Homepage.html");
+    // res.sendFile(path.resolve(__dirname  + "/../client/override.css"))
+    res.sendFile(path.resolve(__dirname  + "/../client/Homepage.html"));
 });
 
 app.get("/api/user", function (req, res) {
@@ -101,9 +100,9 @@ app.delete("/api/user /:id", function (req, res) {
 
 // Telebot
 
-let val = telebot.message('www.google.com', 'Job', 'Pay', 'Desc');
+// let val = telebot.message('www.google.com', 'Job', 'Pay', 'Desc');
 
-
+app.use(express.static(__dirname + '../client'));
 const port = process.env.PORT || 5000;
 app.listen(port);
 
