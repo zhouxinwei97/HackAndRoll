@@ -1,28 +1,18 @@
 var nodeTelegramBotApi = require("node-telegram-bot-api")
 
-
 var token = '1059129730:AAGSsVezEKPww_9Gsw1wDcS3McgT5AnDcjo'; 
 
 var chatID = '@freelancertest'; 
 
-var html = 'Hey this your awesome message\n\n'+
+var html = '<strong>Welcome to Freelancer</strong>\n\n'+
 '🤖🤖🤖🤖🤖🤖🤖🤖🤖🤖\n\n'+
-'<b>bold</b>, <strong>bold</strong>\n'+
-'<i>italic</i>, <em>italic</em>\n'+
-'<a href="https://www.forex-signals.club/">inline URL</a>\n'+
-'<a href="tg://user?id=@zied_hosni">inline mention of a user</a>\n'+
-'<code>inline fixed-width code</code>\n'+
-'<pre>pre-formatted fixed-width code block</pre>\n\n'+
+'<i>italic</i>, <em>About: Freelancer is a sharing platform curated for businesses\n and anyone looking to outsource their small projects</em>\n'+
+'<a href="https://www..club/">Insert URL here</a>\n'+
 '🍩🍩🍩🍩🍩🍩🍩🍩🍩🍩';
-
 
 var buttons = [
     [
-        {"text": "See on Github", "url": "https://github.com/html5-ninja/inline-button-for-telegram-channel"}, 
-        {"text": "Follow me", "url": "https://twitter.com/zied_hosni"}
-    ],
-    [
-        {"text": "🎖 Join our forex channel 🎖", "url": "https://t.me/forex_signals_club"}
+        {"text": "Click here to post a Job", "url": "https://github.com/html5-ninja/inline-button-for-telegram-channel"}, 
     ]
 ];
 
