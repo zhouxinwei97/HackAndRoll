@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mssql": "^6.0.1",
+    "ngrok": "^3.2.7",
     "passport-facebook-token": "^3.3.0",
     "request": "^2.88.0"
   }
