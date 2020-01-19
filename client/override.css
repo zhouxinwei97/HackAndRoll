@@ -23,3 +23,9 @@ form{
     margin: 30%; 
 
 }
+
+/** success **/
+
+.success {
+    padding-top: 10%;
+}

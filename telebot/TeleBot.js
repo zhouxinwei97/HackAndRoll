@@ -17,7 +17,7 @@ exports.message = function (url, job_title, pay, job_desc, telegramhandle, jobID
             }
         ]
     ];
-    var html = '<strong> New ' + category + ' Project </strong> \n\n<strong> Job title: ' + job_title + ' </strong>\n\n' + ' Pay: ' + pay + ' \n\n' + ' Job Description: ' + job_desc;
+    var html = '<strong> New ' + category + ' Project </strong> \n\n<strong> Job title: ' + job_title + ' </strong>\n\n' + ' Pay: $' + pay + ' \n\n' + ' Job Description: ' + job_desc;
     console.log(html);
     bot = new nodeTelegramBotApi(token, {
         polling: true
