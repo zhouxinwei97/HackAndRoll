@@ -1,0 +1,85 @@
+<head>
+    <meta charset="UTF-8">
+    <title>ClickToApply</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="override.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    </div>
+      <a class="navbar-brand js-scroll-trigger" href="Homepage.html">
+        <img src="/images/bm.png" width="30" height="30" class="d-inline-block align-top" alt="freelancehub"> FreeLancerHub</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+
+
+  <form action="/postjob" class="container" method="post">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Name</label>
+    <input type="text" class="form-control" placeholder="name" name="name" >
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Phone Number</label>
+    <input type="number" class="form-control" placeholder="number" name="phonenum" >
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Telegram handle</label>
+    <input type="text" class="form-control" placeholder="telegramUsername" name="username" >
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Quotation</label>
+    <input type="text" class="form-control" placeholder="Price" name="price" >
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Job ID:</label>
+    <input type="text" class="form-control" placeholder="#3241(Optional)" name="jobID" >
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Skillset and Experience</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="desc" value="Description"></textarea>
+  </div>
+  <button type="submit" name="submit">Submit</button>
+</form>
+<footer class="footer bg-dark">
+    <div class="row">
+
+      <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+        <ul class="list-inline mb-2">
+          <li class="list-inline-item">
+            <a href="#" class="foot">About</a>
+          </li>
+          <li class="list-inline-item">⋅</li>
+          <li class="list-inline-item">
+            <a href="#" class="foot">Contact</a>
+          </li>
+          <li class="list-inline-item">⋅</li>
+          <li class="list-inline-item">
+            <a href="#" class="foot">Terms of Use</a>
+          </li>
+          <li class="list-inline-item" class="foot">⋅</li>
+          <li class="list-inline-item">
+            <a href="#" class="foot">Privacy Policy</a>
+          </li>
+        </ul>
+        <p class="text-muted small mb-4 mb-lg-0">© Your Website 2019. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
