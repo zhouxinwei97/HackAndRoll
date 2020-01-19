@@ -8,7 +8,7 @@ exports.message = function (url, job_title, pay, job_desc, telegramhandle, jobID
     var buttons = [
         [{
                 "text": "Click to Apply",
-                "url": url
+                "url": "www.google.com"
             },
             {
                 "text": "Contact",
