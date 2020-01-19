@@ -28,6 +28,14 @@ app.get("/postjob", function(req,res) {
 
 }); 
 
+app.get("/signin", function(req,res){
+    res.sendFile(path.resolve(__dirname  + "/../client/SignIn.html"));
+});
+
+app.get("/apply", function(req,res){
+    res.sendFile(path.resolve(__dirname  + "/../client/ClickToApply.html"));
+});
+
 app.post("/postjob", function(req,res){ 
     // console.log(req);
     console.log(req.body);
