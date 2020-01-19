@@ -7,7 +7,11 @@ const bodyParser = require('body-parser');
 const app = express();
 var router = express.Router();
 
+var jobID = 0; 
 app.use(bodyParser());
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+  })); 
 
 // index page
 app.get("/", function (req, res) {
@@ -26,29 +30,41 @@ app.get("/postjob", function(req,res) {
 
 app.post("/postjob", function(req,res){ 
     // console.log(req);
+    console.log(req.body);
     var name = req.body.name;
     var hp = req.body.phonenum;
     var price = req.body.price;
     var username = req.body.username;
-    console.log(name, price,hp);
-
     var descr = req.body.desc; 
-    var values = "'" + name + "', '" + price + "', '" + username + "', '" + hp + "', '" + descr + "'"; 
-    console.log(values);
+    var category = req.body.category;
+    var values = "'" + name + "', '" + price + "', '" + username + "', '" + hp + "', '" + descr + "', '" + category + "'"; 
+    var query = "INSERT INTO posts (title, price, username, hp, category, descr) VALUES ( " + values + ");";
+    executeQuery(query, function(response) {
+        if (response.includes("200 OK")) {
+            getJobID(function (callback) {
+
+            });
+            console.log(jobID);
+            telebot.message("www.google.com", name, price, descr, username, jobID, category); 
+            jobID ++;
+            res.sendFile(path.resolve(__dirname  + "/../client/success.html")); 
+        } else {
+            res.sendFile(path.resolve(__dirname  + "/../client/tryagain.html")); 
+        }
+    });
 
 });
 
 
 app.get("/api/user", function (req, res) {
     var query = "Select * from users";
-    executeQuery(res, query);
+    executeQuery(callback, query);
 });
 
-function executeQuery(res, sqlquery) {
+function executeQuery(sqlquery, callback) {
 
 
     // database server set-up with azure 
-    var code = '';
     const dbConfig = {
         user: 'bossman69',
         password: 'MLislife123!',
@@ -68,24 +84,64 @@ function executeQuery(res, sqlquery) {
         // create Request object
         let request = new sql.Request();
         // query to the database
-        request.query(sqlquery, function (err, res) {
+        request.query(sqlquery, function (err, res, ) {
             if (err) {
                 console.log(err);
-                code = '404 not found';
+                var code = '404 not found';
 
             } else {
                 // console.table(res.recordset);
-                code = "200 ok";
-
+                var code = "200 OK";
                 console.log(res);
-
                 sql.close();
             }
+            return callback(code); 
             // console.log(code);
         });
 
     });
-    return code;
+
+}
+
+
+function getJobID(callback) {
+
+
+    // database server set-up with azure 
+    const dbConfig = {
+        user: 'bossman69',
+        password: 'MLislife123!',
+        server: 'freelancehub.database.windows.net',
+        database: 'freelancehub',
+        port: 1433,
+        options: {
+            encrypt: true,
+            rowCollectionOnRequestCompletion: true
+        }
+    };
+
+    sql.connect(dbConfig, function (err) {
+
+        console.log("connected");
+        if (err) console.log(err);
+        // create Request object
+        let request = new sql.Request();
+        var sqlquery = "SELECT TOP(1) * from posts order by post_id desc";
+        request.query(sqlquery, function (err, res, ) {
+            if (err) {
+                console.log(err);
+                var code = '404 not found';
+
+            } else {
+                // console.table(res.recordset);
+                var code = "200 OK";
+                postids = res.recordset[0].post_id; 
+                jobID += postids;
+                sql.close();
+            }
+        });
+
+    });
 
 }
 
@@ -98,19 +154,6 @@ app.get("/api/users", function (req, res) {
     executeQuery(res, query);
 });
 
-//POST API
-app.post("/", function (req, res) {
-    // INSERT into users (username, password) VALUES ('ABC', 'efg');
-    var title = req.body.title;
-    var price = req.body.price;
-    var username = req.body.username; 
-    var hp = req.body.HP;
-    var descr = req.body.desc; 
-    var values = "'" + title + "', '" + price + "', '" + username + "', '" + hp + "', '" + descr + "'"
-    var query = "INSERT INTO posts (title, price, username, hp, descr) VALUES ('" + name + "', '" + password + "');";
-    console.log(executeQuery(res, query));
-    res.sendFile(__dirname + "/success.html");
-});
 
 //PUT API
 app.put("/api/user/:id", function (req, res) {
